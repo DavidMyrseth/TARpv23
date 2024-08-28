@@ -115,33 +115,6 @@ namespace TARpv23_CSharp
                 Console.WriteLine(item * item);
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             //int N = random.Next(-100, 101);
             //int M = random.Next(-100, 101);
 
