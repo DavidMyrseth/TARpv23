@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,26 +12,22 @@ class Program
     {
         static void Main()
         {
-            // Создаем генератор случайных чисел
-            Random rand = new Random();
+            Random rand = new Random();  // Генератор случайных чисел
 
-            // Генерируем случайные числа N и M в диапазоне от -100 до 100
-            int N = rand.Next(-100, 101);
+
+            int N = rand.Next(-100, 101);// Генерируем числа N и M в диапазоне от -100 до 100
             int M = rand.Next(-100, 101);
 
-            // Определяем начало и конец диапазона
-            int start = Math.Min(N, M);
-            int end = Math.Max(N, M);
+            int start = Math.Min(N, M); // Вычисляем манимальное значение из N,M ->START
+            int end = Math.Max(N, M); // Вычисляем максимальное значение из N,M ->END
 
-            // Создаем список для хранения чисел из диапазона от N до M
-            List<int> arvud = new List<int>();
+            List<int> arvud = new List<int>(); // Cписок для хранения из чисел в диапазона от N до M
             for (int i = start; i <= end; i++)
             {
                 arvud.Add(i);
             }
 
-            // Выводим квадраты чисел на экран
-            Console.WriteLine($"Arvud vahemikus {start} kuni {end}:");
+            Console.WriteLine($"Arvud vahemikus {start} kuni {end}:"); // Выводим квадраты чисел на экран
             foreach (int arv in arvud)
             {
                 Console.WriteLine($"{arv} ruut on {arv * arv}");
