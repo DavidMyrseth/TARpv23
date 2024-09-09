@@ -1,15 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-class Student
+class Employee
 {
     public string Name { get; set; }
-    public int Age { get; set; }
+    public int Id { get; set; }
 
-    public Student(string name, int age)
+    public Employee(string name, int id)
     {
         Name = name;
-        Age = age;
+        Id = id;
+    }
+
+    public override string ToString()
+    {
+        return $"ID: {Id}, Имя: {Name}";
     }
 }
 
@@ -17,70 +23,101 @@ class Program
 {
     static void Main()
     {
-        List<Student> students = new List<Student>();
-        bool running = true;
+        List<Employee> employees = new List<Employee>();
 
-        while (running)
+        while (true)
         {
-            Console.WriteLine("Выберите действие:");
-            Console.WriteLine("1. Добавить студента");
-            Console.WriteLine("2. Удалить студента");
-            Console.WriteLine("3. Найти студента");
-            Console.WriteLine("4. Показать всех студентов");
+            Console.WriteLine("\nМеню:");
+            Console.WriteLine("1. Добавить сотрудника");
+            Console.WriteLine("2. Удалить сотрудника по ID");
+            Console.WriteLine("3. Найти сотрудника по ID");
+            Console.WriteLine("4. Показать всех сотрудников");
             Console.WriteLine("5. Выйти");
+            Console.Write("Выберите действие: ");
 
-            string choice = Console.ReadLine();
+            int choice = int.Parse(Console.ReadLine());
 
             switch (choice)
             {
-                case "1":
-                    Console.Write("Введите имя студента: ");
-                    string name = Console.ReadLine();
-                    Console.Write("Введите возраст студента: ");
-                    int age = int.Parse(Console.ReadLine());
-                    students.Add(new Student(name, age));
-                    Console.WriteLine("Студент добавлен.");
+                case 1:
+                    AddEmployee(employees);
                     break;
-                case "2":
-                    Console.Write("Введите имя студента для удаления: ");
-                    name = Console.ReadLine();
-                    Student studentToRemove = students.Find(s => s.Name == name);
-                    if (studentToRemove != null)
-                    {
-                        students.Remove(studentToRemove);
-                        Console.WriteLine("Студент удален.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Студент не найден.");
-                    }
+                case 2:
+                    RemoveEmployee(employees);
                     break;
-                case "3":
-                    Console.Write("Введите имя студента для поиска: ");
-                    name = Console.ReadLine();
-                    Student foundStudent = students.Find(s => s.Name == name);
-                    if (foundStudent != null)
-                    {
-                        Console.WriteLine($"Имя: {foundStudent.Name}, Возраст: {foundStudent.Age}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Студент не найден.");
-                    }
+                case 3:
+                    FindEmployee(employees);
                     break;
-                case "4":
-                    Console.WriteLine("Список студентов:");
-                    foreach (var student in students)
-                    {
-                        Console.WriteLine($"Имя: {student.Name}, Возраст: {student.Age}");
-                    }
+                case 4:
+                    ShowAllEmployees(employees);
                     break;
-                case "5":
-                    running = false;
-                    break;
+                case 5:
+                    return;
                 default:
-                    Console.WriteLine("Некорректный выбор.");
+                    Console.WriteLine("Неверный ввод. Пожалуйста, выберите корректный пункт меню.");
                     break;
+            }
+        }
+    }
+
+    static void AddEmployee(List<Employee> employees)
+    {
+        Console.Write("Введите имя сотрудника: ");
+        string name = Console.ReadLine();
+        Console.Write("Введите ID сотрудника: ");
+        int id = int.Parse(Console.ReadLine());
+
+        employees.Add(new Employee(name, id));
+        Console.WriteLine("Сотрудник добавлен!");
+    }
+
+    static void RemoveEmployee(List<Employee> employees)
+    {
+        Console.Write("Введите ID сотрудника для удаления: ");
+        int id = int.Parse(Console.ReadLine());
+
+        Employee employeeToRemove = employees.FirstOrDefault(emp => emp.Id == id);
+
+        if (employeeToRemove != null)
+        {
+            employees.Remove(employeeToRemove);
+            Console.WriteLine("Сотрудник удален.");
+        }
+        else
+        {
+            Console.WriteLine("Сотрудник с таким ID не найден.");
+        }
+    }
+
+    static void FindEmployee(List<Employee> employees)
+    {
+        Console.Write("Введите ID сотрудника для поиска: ");
+        int id = int.Parse(Console.ReadLine());
+
+        Employee foundEmployee = employees.FirstOrDefault(emp => emp.Id == id);
+
+        if (foundEmployee != null)
+        {
+            Console.WriteLine($"Найден сотрудник: {foundEmployee}");
+        }
+        else
+        {
+            Console.WriteLine("Сотрудник с таким ID не найден.");
+        }
+    }
+
+    static void ShowAllEmployees(List<Employee> employees)
+    {
+        if (employees.Count == 0)
+        {
+            Console.WriteLine("Список сотрудников пуст.");
+        }
+        else
+        {
+            Console.WriteLine("Список сотрудников:");
+            foreach (var employee in employees)
+            {
+                Console.WriteLine(employee);
             }
         }
     }
